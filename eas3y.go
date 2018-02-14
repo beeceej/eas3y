@@ -27,8 +27,8 @@ func Save(item Eas3yer) error {
 	bucket, key := item.S3Path()
 	b, err := json.Marshal(item)
 	params := &s3.PutObjectInput{
-		Bucket:      &bucket, // Required
-		Key:         &key,    // Required
+		Bucket:      &bucket,
+		Key:         &key,
 		Body:        bytes.NewReader(b),
 		ContentType: aws.String("text/json"),
 	}

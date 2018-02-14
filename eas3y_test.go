@@ -14,6 +14,5 @@ func (t *Thing) S3Path() (string, string) {
 }
 
 func Test(t *testing.T) {
-
 	Save(&Thing{Name: "ThisIsATest"})
 }
