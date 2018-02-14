@@ -38,5 +38,8 @@ func main() {
 		fmt.Println(err.Error())
 	}
 }
-
 ```
+
+Will result in the following files in S3
+-> `[bucket=eas3y]/Custom.xml`
+-> `[bucket=eas3y]/Default.json`
