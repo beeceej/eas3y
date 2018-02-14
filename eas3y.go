@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"errors"
-	"fmt"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -42,7 +41,6 @@ func putItem(item Eas3yer) (err error) {
 	cfg := item.SaveConfig()
 	b, err = marshal(cfg, item)
 	if err == nil {
-		fmt.Println("serialized!")
 		params := &s3.PutObjectInput{
 			Bucket:      &cfg.Bucket,
 			Key:         &cfg.Key,
