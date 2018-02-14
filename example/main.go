@@ -1,8 +1,11 @@
-# eas3y
+package main
 
-Example usage:
+import (
+	"fmt"
 
-```go
+	"github.com/beeceej/eas3y"
+)
+
 type ExampleCustom struct {
 	Name string
 }
@@ -23,7 +26,6 @@ func (e *ExampleCustom) SaveConfig() *eas3y.Config {
 func (e *ExampleDefault) SaveConfig() *eas3y.Config {
 	return eas3y.NewDefaultConfig("eas3y", fmt.Sprintf("%s.json", e.Name))
 }
-
 func main() {
 	var err error
 	eDefault := &ExampleDefault{Name: "Default"}
@@ -38,5 +40,3 @@ func main() {
 		fmt.Println(err.Error())
 	}
 }
-
-```

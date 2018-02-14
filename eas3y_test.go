@@ -1,7 +1,6 @@
 package eas3y
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -9,8 +8,12 @@ type Thing struct {
 	Name string
 }
 
-func (t *Thing) S3Path() (string, string) {
-	return "eas3y", fmt.Sprintf("%s.json", t.Name)
+func (t *Thing) SaveConfig() *Config {
+	return NewConfig(
+		WithBucket("eas3y"),
+		WithKey(t.Name),
+		WithContentType("text/json"),
+	)
 }
 
 func Test(t *testing.T) {
