@@ -22,8 +22,7 @@ func init() {
 }
 
 type eas3y struct {
-	item Eas3yer
-	s3   *s3.S3
+	s3 *s3.S3
 }
 
 // Eas3yer defines the bucket and path where the struct should be uploaded
@@ -39,10 +38,8 @@ func Save(item Eas3yer) (err error) {
 func putItem(item Eas3yer) (err error) {
 	var (
 		b []byte
-		r *s3.PutObjectOutput
 	)
 	cfg := item.SaveConfig()
-	fmt.Println(cfg)
 	b, err = marshal(cfg, item)
 	if err == nil {
 		fmt.Println("serialized!")
@@ -52,8 +49,7 @@ func putItem(item Eas3yer) (err error) {
 			Body:        bytes.NewReader(b),
 			ContentType: aws.String(contentTypeOrDefault(cfg)),
 		}
-		r, err = e.s3.PutObject(params)
-		fmt.Println(r)
+		_, err = e.s3.PutObject(params)
 	}
 	return err
 }
