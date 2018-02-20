@@ -34,21 +34,29 @@ func Save(item Eas3yer) (err error) {
 	return putItem(item)
 }
 
-func putItem(item Eas3yer) (err error) {
+func putItem(item Eas3yer) error {
 	var (
-		b []byte
+		b   []byte
+		err error
 	)
+
 	cfg := item.SaveConfig()
-	b, err = marshal(cfg, item)
-	if err == nil {
-		params := &s3.PutObjectInput{
-			Bucket:      &cfg.Bucket,
-			Key:         &cfg.Key,
-			Body:        bytes.NewReader(b),
-			ContentType: aws.String(contentTypeOrDefault(cfg)),
-		}
-		_, err = e.s3.PutObject(params)
+
+	cfg.Key = cfg.formatKey()
+	
+	if b, err = marshal(cfg, item); err != nil {
+		return err
 	}
+
+	params := &s3.PutObjectInput{
+		Bucket:      &cfg.Bucket,
+		Key:         &cfg.Key,
+		Body:        bytes.NewReader(b),
+		ContentType: aws.String(contentTypeOrDefault(cfg)),
+	}
+
+	_, err = e.s3.PutObject(params)
+
 	return err
 }
 

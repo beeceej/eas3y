@@ -17,14 +17,14 @@ type ExampleDefault struct {
 func (e *ExampleCustom) SaveConfig() *eas3y.Config {
 	return eas3y.NewConfig(
 		eas3y.WithBucket("eas3y"),
-		eas3y.WithKey(fmt.Sprintf("%s.xml", e.Name)),
+		eas3y.WithKey(e.Name),
 		eas3y.WithContentType("text/xml"),
 		eas3y.AsXML(),
 	)
 }
 
 func (e *ExampleDefault) SaveConfig() *eas3y.Config {
-	return eas3y.NewDefaultConfig("eas3y", fmt.Sprintf("%s.json", e.Name))
+	return eas3y.NewDefaultConfig("eas3y", e.Name)
 }
 func main() {
 	var err error

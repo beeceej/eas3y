@@ -1,5 +1,10 @@
 package eas3y
 
+import (
+	"fmt"
+	"strings"
+)
+
 // Config structure for eas3y, used to specify the specifics of how to save to s3
 type Config struct {
 	Bucket      string
@@ -95,4 +100,19 @@ func marshalAsOrDefault(cfg *Config) uint {
 		return asJSON
 	}
 	return cfg.MarshalAs
+}
+
+func (c *Config) formatKey() string {
+	inferSuffix := func(key string) string {
+		var suffix string
+		if strings.Contains(c.ContentType, "json") && !strings.HasSuffix(c.Key, ".json") {
+			suffix = "json"
+		}
+		if strings.Contains(strings.ToLower(c.ContentType), "xml") && !strings.HasSuffix(c.Key, ".xml") {
+			suffix = "xml"
+		}
+		return fmt.Sprintf("%s.%s", c.Key, suffix)
+	}
+
+	return inferSuffix(c.Key)
 }
