@@ -7,34 +7,21 @@ import (
 	"errors"
 
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/session"
+
 	"github.com/aws/aws-sdk-go/service/s3"
 )
 
-var sess *session.Session
-var e *eas3y
-
-func init() {
-	sess = session.Must(session.NewSession(&aws.Config{Region: aws.String("us-east-1")}))
-	e = new(eas3y)
-	e.s3 = s3.New(sess)
-}
-
-type eas3y struct {
-	s3 *s3.S3
-}
-
-// Eas3yer defines the bucket and path where the struct should be uploaded
-type Eas3yer interface {
+// S3Writer defines the bucket and path where the struct should be uploaded
+type S3Writer interface {
 	SaveConfig() *Config
 }
 
 // Save will save the item to s3 based on the configuration provided by the result of the S3Config() method
-func Save(item Eas3yer) (err error) {
-	return putItem(item)
+func Save(svc *s3.S3, item S3Writer) (*s3.PutObjectOutput, error) {
+	return putItem(svc, item)
 }
 
-func putItem(item Eas3yer) error {
+func putItem(svc *s3.S3, item S3Writer) (*s3.PutObjectOutput, error) {
 	var (
 		b   []byte
 		err error
@@ -43,9 +30,9 @@ func putItem(item Eas3yer) error {
 	cfg := item.SaveConfig()
 
 	cfg.Key = cfg.formatKey()
-	
+
 	if b, err = marshal(cfg, item); err != nil {
-		return err
+		return nil, err
 	}
 
 	params := &s3.PutObjectInput{
@@ -55,12 +42,10 @@ func putItem(item Eas3yer) error {
 		ContentType: aws.String(contentTypeOrDefault(cfg)),
 	}
 
-	_, err = e.s3.PutObject(params)
-
-	return err
+	return svc.PutObject(params)
 }
 
-func marshal(cfg *Config, item Eas3yer) ([]byte, error) {
+func marshal(cfg *Config, item S3Writer) ([]byte, error) {
 	marshalTo := marshalAsOrDefault(cfg)
 	switch marshalTo {
 	case asJSON:
