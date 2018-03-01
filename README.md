@@ -1,4 +1,6 @@
 # eas3y
+[![Build Status](https://travis-ci.org/beeceej/eas3y.svg?branch=master)](https://travis-ci.org/beeceej/eas3y)
+
 
 Example usage:
 
