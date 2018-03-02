@@ -1,6 +1,6 @@
 # eas3y
 [![Build Status](https://travis-ci.org/beeceej/eas3y.svg?branch=master)](https://travis-ci.org/beeceej/eas3y)
-
+[![Go Report Card](https://goreportcard.com/badge/github.com/beeceej/eas3y)](https://goreportcard.com/report/github.com/beeceej/eas3y)
 
 Example usage:
 
@@ -8,7 +8,6 @@ Example usage:
 package main
 
 import (
-	"flag"
 	"fmt"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -19,10 +18,12 @@ import (
 
 var svc = s3.New(session.Must(session.NewSession(&aws.Config{Region: aws.String("us-east-1")})))
 
+// ExampleCustom is an example struct for eas3y
 type ExampleCustom struct {
 	Name string
 }
 
+// ExampleDefault is an example struct for eas3y
 type ExampleDefault struct {
 	Name string
 }
@@ -48,8 +49,6 @@ func main() {
 		err error
 	)
 
-	updateReadme := parseFlags()
-
 	eDefault := &ExampleDefault{Name: "Default"}
 	out, err = eas3y.Save(svc, eDefault)
 	if err != nil {
@@ -65,12 +64,6 @@ func main() {
 	} else {
 		fmt.Println(out.GoString())
 	}
-}
-
-func parseFlags() (shouldUpdate bool) {
-	b := flag.Bool("update-readme", false, " try --update-readme=true if you'd like to update the documentation")
-	flag.Parse()
-	return *b
 }
 
 ```
