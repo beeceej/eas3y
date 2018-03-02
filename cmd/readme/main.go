@@ -14,10 +14,11 @@ func buildReadme() {
 		b        []byte
 		err      error
 	)
-	if fexample, err = os.Open(filepath.Join("../../example/main.go")); err != nil {
+
+	if fexample, err = os.Open(filepath.Join("..", "example", "main.go")); err != nil {
 		panic(err.Error())
 	}
-	if freadme, err = os.OpenFile(filepath.Join("../../README.md"), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0777); err != nil {
+	if freadme, err = os.OpenFile(filepath.Join("..", "..", "README.md"), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0777); err != nil {
 		panic(err.Error())
 	}
 
