@@ -88,13 +88,6 @@ func AsXML() ConfigOption {
 	}
 }
 
-func contentTypeOrDefault(cfg *Config) string {
-	if cfg.ContentType == "" {
-		return "text/json"
-	}
-	return cfg.ContentType
-}
-
 func marshalAsOrDefault(cfg *Config) uint {
 	if cfg.MarshalAs == 0 {
 		return asJSON
@@ -102,7 +95,9 @@ func marshalAsOrDefault(cfg *Config) uint {
 	return cfg.MarshalAs
 }
 
-func (c *Config) formatKey() string {
+// FormatKey will attempt to format the key based on the content-type set in the Config Object
+func (c *Config) FormatKey() string {
+
 	inferSuffix := func(key string) string {
 		var suffix string
 		if strings.Contains(c.ContentType, "json") && !strings.HasSuffix(c.Key, ".json") {

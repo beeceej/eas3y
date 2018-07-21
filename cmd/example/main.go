@@ -6,7 +6,8 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
-	"github.com/beeceej/eas3y"
+	eas3y "github.com/beeceej/eas3y"
+	eas3yV1 "github.com/beeceej/eas3y/v1"
 )
 
 var svc = s3.New(session.Must(session.NewSession(&aws.Config{Region: aws.String("us-east-1")})))
@@ -43,7 +44,7 @@ func main() {
 	)
 
 	eDefault := &ExampleDefault{Name: "Default"}
-	out, err = eas3y.Save(svc, eDefault)
+	out, err = eas3yV1.Save(svc, eDefault)
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
@@ -51,7 +52,7 @@ func main() {
 	}
 
 	eCustom := &ExampleCustom{Name: "Custom"}
-	out, err = eas3y.Save(svc, eCustom)
+	out, err = eas3yV1.Save(svc, eCustom)
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {

@@ -15,7 +15,7 @@ func TestConfig(t *testing.T) {
 			expectedKey = key
 		}
 
-		actualKey := c.formatKey()
+		actualKey := c.FormatKey()
 		if expectedKey != actualKey {
 			t.Fail()
 		}

@@ -34,6 +34,12 @@
   version = "v1.12.76"
 
 [[projects]]
+  name = "github.com/aws/aws-sdk-go-v2"
+  packages = ["."]
+  revision = "ff1a530c31507c97cf5edbee226e604ca08661cc"
+  version = "v2.0.0-preview.4"
+
+[[projects]]
   name = "github.com/go-ini/ini"
   packages = ["."]
   revision = "32e4c1e6bc4e7d0d8451aa6b75200d19e37a536a"
@@ -47,6 +53,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "d4b92f77ac11fa87705b0d9527ef76c4f2a2ac46035ee49c7d3a2c4260462747"
+  inputs-digest = "45635ead216f09d0ae5d2aac49a5ffa0f29f2ebecba0d63a0940a0fcca960b4a"
   solver-name = "gps-cdcl"
   solver-version = 1
