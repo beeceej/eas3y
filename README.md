@@ -74,7 +74,7 @@ Will result in the following files in S3
 
 -> `[bucket=eas3y]/Default.json`
 
-Take me to [thing](#thing)
+Take me to [Thingy asdf asdf](#thing)
 d
 d
 d
